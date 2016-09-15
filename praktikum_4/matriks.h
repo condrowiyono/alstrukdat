@@ -134,4 +134,28 @@ void Transpose (MATRIKS * M);
 /* I.S. M terdefinisi dan IsBujursangkar(M) */
 /* F.S. M "di-transpose", yaitu setiap elemen M(i,j) ditukar nilainya dengan elemen M(j,i) */
 
+float RataBrs (MATRIKS M, indeks i);
+/* Menghasilkan rata-rata dari elemen pada baris ke-i
+ * Prekondisi: i adalah indeks baris efektif dari M */
+ 
+float RataKol (MATRIKS M, indeks j);
+/* Menghasilkan rata-rata dari elemen pada kolom ke-j
+ * Prekondisi: j adalah indeks kolom efektif dari M */
+ 
+void MaxMinBrs (MATRIKS M, indeks i, ElType * max, ElType * min);
+/* I.S. i adalah indeks baris efektif dari M, M terdefinisi
+ * F.S. max berisi elemen maksimum pada baris i dari M
+        min berisi elemen minimum pada baris i dari M */
+
+void MaxMinKol (MATRIKS M, indeks j, ElType * max, ElType * min);
+/* I.S. j adalah indeks kolom efektif dari M, M terdefinisi
+ * F.S. max berisi elemen maksimum pada kolom j dari M
+        min berisi elemen minimum pada kolom j dari M */
+        
+int CountXBrs (MATRIKS M, indeks i, ElType X);
+/* Menghasilkan banyaknya kemunculan X pada baris i dari M */
+
+int CountXKol (MATRIKS M, indeks j, ElType X);
+/* Menghasilkan banyaknya kemunculan X pada kolom j dari M */
+
 #endif

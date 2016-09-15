@@ -2,7 +2,7 @@
  * Author
  * Nama : Jauhar Arifin
  * NIM : 13515049
- * Tanggal : Rabu, 14 September 2015
+ * Tanggal : Kamis, 15 September 2015
  * Nama file : matriks.c
  */
 
@@ -369,4 +369,92 @@ void Transpose (MATRIKS * M) {
 			Elmt(*M,i,j) = Elmt(*M,j,i);
 			Elmt(*M,j,i) = tmp;
 		}
+}
+
+/*
+ * RataBrs
+ * Menghasilkan rata-rata dari elemen pada baris ke-i
+ * Prekondisi: i adalah indeks baris efektif dari M
+ */
+float RataBrs (MATRIKS M, indeks i) {
+	int j,sum;
+	sum = 0;
+	for (j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++)
+		sum += Elmt(M,i,j);
+	return (float) sum / (float) NKolEff(M);
+}
+
+/*
+ * RataKol
+ * Menghasilkan rata-rata dari elemen pada kolom ke-j
+ * Prekondisi: j adalah indeks kolom efektif dari M
+ */
+float RataKol (MATRIKS M, indeks j) {
+	int i,sum;
+	sum = 0;
+	for (i = GetFirstIdxBrs(M); i <= GetLastIdxBrs(M); i++)
+		sum += Elmt(M,i,j);
+	return (float) sum / (float) NBrsEff(M);
+}
+
+/*
+ * MaxMinBrs
+ * I.S. i adalah indeks baris efektif dari M, M terdefinisi
+ * F.S. max berisi elemen maksimum pada baris i dari M
+        min berisi elemen minimum pada baris i dari M
+ */
+void MaxMinBrs (MATRIKS M, indeks i, ElType * max, ElType * min) {
+	*max = Elmt(M,i,GetFirstIdxKol(M));
+	*min = Elmt(M,i,GetFirstIdxKol(M));
+	int j;
+	for (j = GetFirstIdxKol(M) + 1; j <= GetLastIdxKol(M); j++) {
+		if (Elmt(M,i,j) < *min)
+			*min = Elmt(M,i,j);
+		if (Elmt(M,i,j) > *max)
+			*max = Elmt(M,i,j);
+	}
+} 
+
+/* 
+ * MaxMinKol
+ * I.S. j adalah indeks kolom efektif dari M, M terdefinisi
+ * F.S. max berisi elemen maksimum pada kolom j dari M
+           min berisi elemen minimum pada kolom j dari M
+ */
+void MaxMinKol (MATRIKS M, indeks j, ElType * max, ElType * min) {
+	*max = Elmt(M,GetFirstIdxBrs(M),j);
+	*min = Elmt(M,GetFirstIdxBrs(M),j);
+	int i;
+	for (i = GetFirstIdxBrs(M) + 1; i <= GetLastIdxBrs(M); i++) {
+		if (Elmt(M,i,j) < *min)
+			*min = Elmt(M,i,j);
+		if (Elmt(M,i,j) > *max)
+			*max = Elmt(M,i,j);
+	}
+}
+
+/*
+ * CountXBrs
+ * Menghasilkan banyaknya kemunculan X pada baris i dari M
+ */
+int CountXBrs (MATRIKS M, indeks i, ElType X) {
+	int j,n;
+	n = 0;
+	for (j = GetFirstIdxKol(M); j <= GetLastIdxKol(M); j++)
+		if (Elmt(M,i,j) == X)
+			n++;
+	return n;
+}
+
+/*
+ * CountXKol
+ * Menghasilkan banyaknya kemunculan X pada kolom j dari M
+ */
+int CountXKol (MATRIKS M, indeks j, ElType X){
+	int i,n;
+	n = 0;
+	for (i = GetFirstIdxBrs(M); i <= GetLastIdxBrs(M); i++)
+		if (Elmt(M,i,j) == X)
+			n++;
+	return n;
 }
