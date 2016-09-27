@@ -28,7 +28,7 @@ void CreateEmpty (Stack *S) {
  * Mengirim true jika Stack kosong: lihat definisi di atas
  */
 boolean IsEmpty (Stack S) {
-	return InfoTop == Nil;
+	return InfoTop(S) == Nil;
 }
 
 /*
