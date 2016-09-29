@@ -20,7 +20,6 @@
 void CreateEmpty (Stack *S) {
 	S = (Stack*) malloc(sizeof(Stack));
 	Top(*S) = 0;
-	InfoTop(*S) = Nil;
 }
 
 /*
@@ -28,7 +27,7 @@ void CreateEmpty (Stack *S) {
  * Mengirim true jika Stack kosong: lihat definisi di atas
  */
 boolean IsEmpty (Stack S) {
-	return InfoTop(S) == Nil;
+	return Top(S) == Nil;
 }
 
 /*
