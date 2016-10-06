@@ -2,13 +2,14 @@
  * Author
  * Nama : Jauhar Arifin
  * NIM : 13515049
- * Tanggal : Selasa, 4 Oktober 2015
+ * Tanggal : Selasa, 5 Oktober 2015
  * Nama file : queue.c
  */
 
 #include "stdlib.h"
+#include "stdio.h"
 #include "boolean.h"
-#include "queue.h"
+#include "prioqueue.h"
 
 /*
  * IsEmpty
@@ -47,8 +48,7 @@ int NBElmt (Queue Q) {
  * Proses : Melakukan alokasi,Membuat sebuah Q kosong
  */
 void CreateEmpty (Queue * Q, int Max) {
-	Head(*Q) = 0;
-	Tail(*Q) = 0;
+	DeAlokasi(Q);
 	(*Q).T = (infotype*) malloc((Max + 1) * sizeof(infotype));
 	MaxEl(*Q) = Max;
 }
@@ -60,6 +60,8 @@ void CreateEmpty (Queue * Q, int Max) {
  * F.S. Q menjadi tidak terdefinisi lagi, MaxEl(Q) diset 0
  */
 void DeAlokasi(Queue * Q) {
+	if (Q == Nil)
+		Q = (Queue *) malloc(sizeof(Queue));
 	if ((*Q).T != Nil)
 		free((*Q).T);
 	MaxEl(*Q) = 0;
@@ -79,6 +81,21 @@ void Add (Queue * Q, infotype X) {
 		Head(*Q) = 1;
 	Tail(*Q) = Tail(*Q) % MaxEl(*Q) + 1;
 	InfoTail(*Q) = X;
+	
+	int i = Tail(*Q);
+	boolean insert = true;
+	while (i != Head(*Q) && insert) {
+		int previ = i - 1 == 0 ? MaxEl(*Q) : i - 1;
+		
+		if (Prio(Elmt(*Q,i)) > Prio(Elmt(*Q,previ))) {
+			infotype tmp = Elmt(*Q,i);
+			Elmt(*Q,i) = Elmt(*Q,previ);
+			Elmt(*Q,previ) = tmp;
+		} else
+			insert = false;
+		
+		i = previ;
+	}
 }
 
 /*
@@ -93,4 +110,22 @@ void Del(Queue * Q, infotype * X) {
 		Head(*Q) = Tail(*Q) = Nil;
 	else
 		Head(*Q) = Head(*Q) % MaxEl(*Q) + 1;
+}
+
+/* 
+ * PrintQueue
+ * Mencetak isi queue Q ke layar
+ * I.S. Q terdefinisi, mungkin kosong
+ * F.S. Q tercetak ke layar dengan format:
+   <prio-1> <elemen-1>
+   ...
+   <prio-n> <elemen-n>
+ */
+void PrintQueue (Queue Q) {
+	infotype last;
+	while (!IsEmpty(Q)) {
+		Del(&Q, &last);
+		printf("%d %d\n", Prio(last), Info(last)); 
+	}
+	printf("#\n");
 }
