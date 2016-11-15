@@ -200,11 +200,11 @@ boolean Search (List L, infotype X) {
    Semua elemen list baru harus dialokasi
  * Jika alokasi gagal, hasilnya list kosong
  */
-List Inverse (List L) {
+List InverseList (List L) {
 	if (L == Nil)
 		return Nil;
 	else
-		return KonsB(Inverse(Tail(L)), FirstElmt(L));
+		return KonsB(InverseList(Tail(L)), FirstElmt(L));
 }
 
 /* 
@@ -287,11 +287,11 @@ boolean IsAllExist (List L1, List L2) {
  * Mengirimkan nilai info(P) yang maksimum
  * Prekondisi untuk Max/Min/Sum/Average : List tidak kosong
  */
-infotype Max (List L) {
+infotype MaxList (List L) {
 	if (IsOneElmt(L))
 		return FirstElmt(L);
 	else {
-		infotype x = Max(Tail(L));
+		infotype x = MaxList(Tail(L));
 		if (x > FirstElmt(L))
 			return x;
 		else
@@ -304,11 +304,11 @@ infotype Max (List L) {
  * Mengirimkan nilai info(P) yang minimum
  * Prekondisi untuk Max/Min/Sum/Average : List tidak kosong
  */
-infotype Min (List L) {
+infotype MinList (List L) {
 	if (IsOneElmt(L))
 		return FirstElmt(L);
 	else {
-		infotype x = Min(Tail(L));
+		infotype x = MinList(Tail(L));
 		if (x < FirstElmt(L))
 			return x;
 		else
@@ -333,6 +333,6 @@ infotype SumList (List L) {
  * Mengirimkan nilai rata-rata elemen list L
  * Prekondisi untuk Max/Min/Sum/Average : List tidak kosong
  */
-float Average (List L) {
+float AverageList (List L) {
 	return (float) SumList(L)/ (float) NbElmtList(L);
 }
